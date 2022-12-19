@@ -1,22 +1,28 @@
 const showHideAnswer = {
   jsEnabled() {
-    document.documentElement.classList.add('js-enabled')
+    document.documentElement.classList.add('js-enabled');
   },
 
   initConst() {
     this.buttons = document.querySelectorAll('button');
-    this.answers = document.querySelectorAll('.desc')
+    this.answers = document.querySelectorAll('.desc');
   },
+
+  //peut t'on faire mieux ?
 
   displayAnswer(){
     this.buttons.forEach(button => {
       button.addEventListener('click',()=>{
         const ariaControls = button.getAttribute('aria-controls');
+        const areaExpanded = button.getAttribute('aria-expanded');
         this.answers.forEach(answer =>{
-          if (answer.id === ariaControls){
+          button.focus();
+          if (answer.id === ariaControls && areaExpanded === 'false'){
             answer.style.display = 'block';
-            button.focus();
-            answer.setAttribute('aria-expanded','true')
+            button.setAttribute('aria-expanded','true');
+          }else if (answer.id === ariaControls && areaExpanded === 'true'){
+            answer.style.display = 'none';
+            button.setAttribute('aria-expanded','false');
           }
         });
       })
@@ -30,4 +36,4 @@ const showHideAnswer = {
   }
 }
 
-showHideAnswer.initApp()
+showHideAnswer.initApp();
